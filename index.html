@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Atraia novos clientes com Google Meu Negócio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--azul:#2f6bff;--azul-esc:#1f55dd;--texto:#1d2330;--suave:#5b6474;--linha:#d9deea;--fundo:#fff}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%}
+body{font-family:"Nunito Sans",system-ui,sans-serif;color:var(--texto);background:var(--fundo);overflow:hidden}
+.barra{position:fixed;top:0;left:0;height:4px;width:0;background:var(--azul);transition:width .35s ease;z-index:5}
+.tela{position:absolute;inset:0;display:none;align-items:center;padding:24px 28px 96px}
+.tela.ativa{display:flex}
+.conteudo{width:100%;max-width:560px;margin:0 auto}
+h1,h2{font-weight:400;line-height:1.18;letter-spacing:-.01em}
+h1{font-size:clamp(28px,6vw,40px)}
+h2{font-size:clamp(24px,5vw,32px);margin-bottom:8px}
+p.apoio{color:var(--suave);font-size:16px;line-height:1.5;margin:16px 0 28px}
+h2+p.apoio{margin-top:0}
+.btn{font:inherit;font-weight:700;font-size:16px;color:#fff;background:var(--azul);border:0;border-radius:6px;padding:12px 20px;cursor:pointer;text-decoration:none;display:inline-block}
+.btn:hover{background:var(--azul-esc)}
+.btn:focus-visible,.opcao:focus-visible,.nav button:focus-visible,input:focus-visible{outline:3px solid #9db8ff;outline-offset:2px}
+input[type=text],input[type=tel]{width:100%;font:inherit;font-size:22px;padding:8px 0;border:0;border-bottom:2px solid var(--linha);background:transparent;color:var(--texto);border-radius:0}
+input:focus{border-bottom-color:var(--azul);outline:0}
+.erro{color:#c62828;font-size:14px;min-height:20px;margin-top:8px}
+.opcoes{display:grid;gap:10px;margin-top:20px}
+.opcao{font:inherit;text-align:left;display:flex;gap:12px;align-items:center;width:100%;padding:12px 14px;background:#eef3ff;border:1.5px solid #bcd0ff;border-radius:6px;color:var(--texto);cursor:pointer;font-size:17px}
+.opcao:hover{background:#e0eaff}
+.opcao.sel{background:var(--azul);border-color:var(--azul);color:#fff}
+.opcao b{display:inline-grid;place-items:center;min-width:26px;height:26px;border:1.5px solid currentColor;border-radius:4px;font-size:13px}
+.acoes{display:flex;gap:12px;align-items:center;margin-top:24px}
+.dica{font-size:13px;color:var(--suave)}
+.nav{position:fixed;right:20px;bottom:20px;display:flex;gap:2px;z-index:5}
+.nav button{font:inherit;width:44px;height:40px;border:0;background:var(--azul);color:#fff;font-size:18px;cursor:pointer}
+.nav button:first-child{border-radius:6px 0 0 6px}
+.nav button:last-child{border-radius:0 6px 6px 0}
+.nav button:disabled{opacity:.45;cursor:default}
+.nav.oculta{display:none}
+@media (prefers-reduced-motion:reduce){.barra{transition:none}}
+</style>
+
+<!-- Meta Pixel: base (somente PageView). Troque SEU_PIXEL_ID -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','SEU_PIXEL_ID');
+fbq('track','PageView');
+</script>
+</head>
+<body>
+<div class="barra" id="barra"></div>
+
+<!-- 0. Boas-vindas -->
+<section class="tela ativa" data-tipo="inicio">
+  <div class="conteudo">
+    <h1>Falta pouco para você começar a atrair novos clientes da sua cidade com Google Meu Negócio</h1>
+    <p class="apoio">Aqui você vai responder poucas e rápidas perguntas. No final você será direcionado(a) para o meu WhatsApp.</p>
+    <button class="btn" data-avancar>Começar →</button>
+  </div>
+</section>
+
+<!-- 1. Nome -->
+<section class="tela" data-campo="nome" data-tipo="texto">
+  <div class="conteudo">
+    <h2>Qual é o seu nome?</h2>
+    <p class="apoio">Como você gostaria de ser chamado(a)?</p>
+    <input type="text" autocomplete="name" placeholder="Digite seu nome" aria-label="Nome">
+    <div class="erro" role="alert"></div>
+    <div class="acoes"><button class="btn" data-avancar>OK</button><span class="dica">ou pressione Enter</span></div>
+  </div>
+</section>
+
+<!-- 2. WhatsApp -->
+<section class="tela" data-campo="whatsapp" data-tipo="telefone">
+  <div class="conteudo">
+    <h2>Qual é o seu WhatsApp?</h2>
+    <p class="apoio">Com DDD. É por ele que vamos continuar a conversa.</p>
+    <input type="tel" inputmode="numeric" autocomplete="tel" placeholder="(88) 99999-9999" aria-label="WhatsApp">
+    <div class="erro" role="alert"></div>
+    <div class="acoes"><button class="btn" data-avancar>OK</button><span class="dica">ou pressione Enter</span></div>
+  </div>
+</section>
+
+<!-- 3. Cidade -->
+<section class="tela" data-campo="cidade" data-tipo="texto">
+  <div class="conteudo">
+    <h2>Em qual cidade você atua?</h2>
+    <p class="apoio">Cidade e estado do seu escritório.</p>
+    <input type="text" autocomplete="address-level2" placeholder="Ex: Fortaleza - CE" aria-label="Cidade">
+    <div class="erro" role="alert"></div>
+    <div class="acoes"><button class="btn" data-avancar>OK</button><span class="dica">ou pressione Enter</span></div>
+  </div>
+</section>
+
+<!-- 4. Perfil no Google -->
+<section class="tela" data-campo="perfil_google" data-tipo="opcoes">
+  <div class="conteudo">
+    <h2>Seu escritório já tem perfil no Google Meu Negócio?</h2>
+    <div class="opcoes">
+      <button class="opcao" data-valor="Sim, e está otimizado"><b>A</b>Sim, e está otimizado</button>
+      <button class="opcao" data-valor="Sim, mas está abandonado"><b>B</b>Sim, mas está abandonado</button>
+      <button class="opcao" data-valor="Não tenho"><b>C</b>Não tenho</button>
+    </div>
+  </div>
+</section>
+
+<!-- 5. Faturamento (Lead nas opções B, C e D) -->
+<section class="tela" data-campo="faturamento" data-tipo="opcoes" data-pixel="B,C,D">
+  <div class="conteudo">
+    <h2>Qual é o faturamento mensal do seu escritório?</h2>
+    <div class="opcoes">
+      <button class="opcao" data-letra="A" data-valor="R$ 5 a 10 mil"><b>A</b>R$ 5 a 10 mil</button>
+      <button class="opcao" data-letra="B" data-valor="R$ 10 a 20 mil"><b>B</b>R$ 10 a 20 mil</button>
+      <button class="opcao" data-letra="C" data-valor="R$ 20 a 30 mil"><b>C</b>R$ 20 a 30 mil</button>
+      <button class="opcao" data-letra="D" data-valor="R$ 30 a 50 mil"><b>D</b>R$ 30 a 50 mil</button>
+    </div>
+  </div>
+</section>
+
+<!-- Final -->
+<section class="tela" data-tipo="final">
+  <div class="conteudo">
+    <h1>Pronto! Recebemos suas respostas.</h1>
+    <p class="apoio">Clique no botão abaixo para falar comigo no WhatsApp e ver como colocar seu escritório no topo do Google.</p>
+    <a class="btn" id="btnZap" href="#" target="_blank" rel="noopener">Falar no WhatsApp</a>
+  </div>
+</section>
+
+<div class="nav" id="nav">
+  <button id="subir" aria-label="Pergunta anterior">↑</button>
+  <button id="descer" aria-label="Próxima pergunta">↓</button>
+</div>
+
+<script>
+/* ===== CONFIGURAÇÕES: preencha aqui ===== */
+const SHEETS_URL = "COLE_A_URL_AQUI";      // URL /exec do Google Apps Script
+const WHATSAPP   = "5588999999999";        // DDI + DDD + número, só dígitos
+const MENSAGEM   = "Olá! Acabei de responder o formulário e quero saber mais sobre o Google Meu Negócio.";
+/* ======================================== */
+
+const telas = [...document.querySelectorAll(".tela")];
+const barra = document.getElementById("barra");
+const nav = document.getElementById("nav");
+const respostas = {};
+let atual = 0, leadEnviado = false, enviado = false;
+
+function ir(i){
+  atual = Math.max(0, Math.min(i, telas.length - 1));
+  telas.forEach((t, k) => t.classList.toggle("ativa", k === atual));
+  barra.style.width = (atual / (telas.length - 1) * 100) + "%";
+  const final = telas[atual].dataset.tipo === "final";
+  nav.classList.toggle("oculta", final);
+  document.getElementById("subir").disabled = atual === 0;
+  document.getElementById("descer").disabled = atual >= telas.length - 2;
+  const campo = telas[atual].querySelector("input");
+  if (campo) setTimeout(() => campo.focus(), 50);
+  if (final) concluir();
+}
+
+function validar(tela){
+  const input = tela.querySelector("input");
+  if (!input) return true;
+  const erro = tela.querySelector(".erro");
+  const v = input.value.trim();
+  let msg = "";
+  if (tela.dataset.tipo === "telefone"){
+    const n = v.replace(/\D/g, "");
+    if (n.length < 10 || n.length > 11) msg = "Digite um WhatsApp válido com DDD.";
+  } else if (v.length < 2) msg = "Preencha este campo para continuar.";
+  erro.textContent = msg;
+  if (!msg) respostas[tela.dataset.campo] = v;
+  return !msg;
+}
+
+document.querySelectorAll("[data-avancar]").forEach(b => b.addEventListener("click", () => {
+  const tela = telas[atual];
+  if (tela.dataset.tipo === "inicio" || validar(tela)) ir(atual + 1);
+}));
+
+document.querySelectorAll("input").forEach(inp => inp.addEventListener("keydown", e => {
+  if (e.key === "Enter"){ e.preventDefault(); telas[atual].querySelector("[data-avancar]").click(); }
+}));
+
+// máscara de telefone
+document.querySelector("input[type=tel]").addEventListener("input", e => {
+  let n = e.target.value.replace(/\D/g, "").slice(0, 11);
+  if (n.length > 6) n = `(${n.slice(0,2)}) ${n.slice(2, n.length > 10 ? 7 : 6)}-${n.slice(n.length > 10 ? 7 : 6)}`;
+  else if (n.length > 2) n = `(${n.slice(0,2)}) ${n.slice(2)}`;
+  e.target.value = n;
+});
+
+// múltipla escolha
+document.querySelectorAll(".opcao").forEach(op => op.addEventListener("click", () => {
+  const tela = op.closest(".tela");
+  tela.querySelectorAll(".opcao").forEach(o => o.classList.remove("sel"));
+  op.classList.add("sel");
+  respostas[tela.dataset.campo] = op.dataset.valor;
+  // Pixel: Lead só na pergunta de faturamento, opções B, C e D, uma vez por sessão
+  if (tela.dataset.pixel && tela.dataset.pixel.split(",").includes(op.dataset.letra) && !leadEnviado){
+    leadEnviado = true;
+    if (window.fbq) fbq("track", "Lead");
+  }
+  setTimeout(() => ir(atual + 1), 250);
+}));
+
+document.getElementById("subir").addEventListener("click", () => ir(atual - 1));
+document.getElementById("descer").addEventListener("click", () => {
+  const t = telas[atual];
+  if (t.dataset.tipo === "inicio" || t.dataset.tipo === "opcoes" ? respostas[t.dataset.campo] || t.dataset.tipo === "inicio" : validar(t)) ir(atual + 1);
+});
+
+// envio para o Google Sheets + botão do WhatsApp
+function concluir(){
+  const params = new URLSearchParams(location.search);
+  const dados = {...respostas};
+  ["utm_source","utm_medium","utm_campaign","utm_content","utm_term"].forEach(k => dados[k] = params.get(k) || "");
+  document.getElementById("btnZap").href = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(MENSAGEM)}`;
+  if (enviado || SHEETS_URL.includes("COLE_A_URL")) return;
+  enviado = true;
+  fetch(SHEETS_URL, {method:"POST", mode:"no-cors", headers:{"Content-Type":"text/plain;charset=utf-8"}, body:JSON.stringify(dados)})
+    .catch(() => { enviado = false; setTimeout(concluir, 4000); });
+}
+
+ir(0);
+</script>
+</body>
+</html>
